@@ -1,0 +1,12 @@
+
+
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:#f4f4f4}
+.container{max-width:800px;margin:auto;background:#fff;padding:20px}
+h2{margin-top:0}
+.form-group{margin-bottom:12px}
+label{display:inline-block;width:120px;font-weight:bold}
+input[type=text],input[type=url],input[type=number]{width:60%;padding:6px}
+button{margin:8px 4px;padding:6px 14px;cursor:pointer}
+.nav{margin-top:15px}
+#next,#save_continue,#back{margin-right:10px}
+.item{border:1px solid #ccc;padding:8px;margin:6px 0;display:flex;justify-content:space-between;align-items:center}
