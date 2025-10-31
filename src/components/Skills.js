@@ -1,57 +1,43 @@
-
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { addSkill, deleteSkill } from "../actions";
 
-const Skills = ({ skills, addSkill, deleteSkill }) => {
+function Skills() {
+  const [skills, setSkills] = useState([]);
   const [skill, setSkill] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (skill.trim()) {
-      addSkill(skill);
+  const handleAddSkill = () => {
+    if (skill.trim() !== "") {
+      setSkills([...skills, skill]);
       setSkill("");
     }
   };
 
-  return (
-    <div className="skills-section">
-      <h2>Skills</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Skill:</label>
-          <input
-            type="text"
-            name="skill"
-            value={skill}
-            onChange={(e) => setSkill(e.target.value)}
-            required
-          />
-        </div>
-        <button id="add_skill" type="submit">
-          Add Skill
-        </button>
-      </form>
+  const handleDelete = (index) => {
+    setSkills(skills.filter((_, i) => i !== index));
+  };
 
-      <div className="skills-list">
-        <h3>Your Skills</h3>
-        <ul>
-          {skills.map((skill, index) => (
-            <li key={index}>
-              {skill}
-              <button id="delete_skill" onClick={() => deleteSkill(index)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+  return (
+    <div>
+      <h2>Skills</h2>
+      <input
+        id="skill"
+        name="skill"
+        placeholder="Skill"
+        value={skill}
+        onChange={e => setSkill(e.target.value)}
+        data-testid="skill-input"
+      />
+      <button id="add_skill" onClick={handleAddSkill}>Add Skill</button>
+
+      <ul>
+        {skills.map((s, index) => (
+          <li key={index}>
+            {s}
+            <button id={`delete_skill_${index}`} onClick={() => handleDelete(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
-const mapStateToProps = (state) => ({
-  skills: state.resume.skills,
-});
-
-export default connect(mapStateToProps, { addSkill, deleteSkill })(Skills);
+export default Skills;
