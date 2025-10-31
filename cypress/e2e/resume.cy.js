@@ -2,7 +2,7 @@
 describe("Resume Builder", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000"); // होम पेज खोलो
-  });
+  })
 
   /* ---------- 1. Profile page ---------- */
   it("fills profile and navigates", () => {
@@ -13,7 +13,7 @@ describe("Resume Builder", () => {
     cy.get("input[name=url]").type("https://i.pravatar.cc/150?img=3");
     cy.contains("button", "Save").click();
     cy.get("#next").click(); // Education पर जाओ
-  });
+  })
 
   /* ---------- 2. Education page ---------- */
   it("adds education", () => {
@@ -24,7 +24,7 @@ describe("Resume Builder", () => {
     cy.get("input[name=percentage]").type("85");
     cy.get("#add_education").click();
     cy.get(".item").should("contain", "B.Tech");
-  });
+  })
 
   /* ---------- 3. Skills page ---------- */
   it("adds skill", () => {
@@ -34,7 +34,7 @@ describe("Resume Builder", () => {
     cy.get("input[name=skill]").type("React");
     cy.get("#add_skill").click();
     cy.get(".item").should("contain", "React");
-  });
+  })
 
   /* ---------- 4. Projects page ---------- */
   it("adds project", () => {
@@ -47,7 +47,7 @@ describe("Resume Builder", () => {
     cy.get("input[name=description]").type("Full-stack shopping site");
     cy.get("#add_project").click();
     cy.get(".item").should("contain", "E-Commerce");
-  });
+  })
 
   /* ---------- 5. Social page ---------- */
   it("adds social link", () => {
@@ -59,7 +59,7 @@ describe("Resume Builder", () => {
     cy.get("input[name=Social]").type("https://github.com/rahul");
     cy.get("#add_social").click();
     cy.get(".item").should("contain", "github.com/rahul");
-  });
+  })
 
   /* ---------- 6. Final Resume page ---------- */
   it("shows final resume", () => {
@@ -105,5 +105,5 @@ describe("Resume Builder", () => {
     cy.contains("React");
     cy.contains("E-Commerce");
     cy.contains("github.com/rahul");
-  });
-});
+  })
+})
