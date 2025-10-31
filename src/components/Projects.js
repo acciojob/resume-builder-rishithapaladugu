@@ -1,91 +1,59 @@
-
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { addProject, deleteProject } from "../actions";
 
-const Projects = ({ projects, addProject, deleteProject }) => {
-  const [formData, setFormData] = useState({
-    projectName: "",
-    techStack: "",
-    description: "",
-  });
+function Projects() {
+  const [projects, setProjects] = useState([]);
+  const [projectName, setProjectName] = useState("");
+  const [techStack, setTechStack] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleAddProject = () => {
+    setProjects([...projects, { projectName, techStack, description }]);
+    setProjectName(""); setTechStack(""); setDescription("");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addProject(formData);
-    setFormData({
-      projectName: "",
-      techStack: "",
-      description: "",
-    });
+  const handleDelete = (index) => {
+    setProjects(projects.filter((_, i) => i !== index));
   };
 
   return (
-    <div className="projects-section">
-      <h2>Projects</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Project Name:</label>
-          <input
-            type="text"
-            name="projectName"
-            value={formData.projectName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Tech Stack:</label>
-          <input
-            type="text"
-            name="techStack"
-            value={formData.techStack}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button id="add_project" type="submit">
-          Add Project
-        </button>
-      </form>
+    <div>
+      <h2>Add your Mini Projects</h2>
+      <input
+        id="projectName"
+        name="projectName"
+        placeholder="Project Name"
+        value={projectName}
+        onChange={e => setProjectName(e.target.value)}
+        data-testid="project-name"
+      />
+      <input
+        id="techStack"
+        name="techStack"
+        placeholder="Tech Stack"
+        value={techStack}
+        onChange={e => setTechStack(e.target.value)}
+        data-testid="project-tech"
+      />
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Description"
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        data-testid="project-description"
+      />
+      <button id="add_project" onClick={handleAddProject}>Add Project</button>
 
-      <div className="projects-list">
-        <h3>Your Projects</h3>
-        {projects.map((project, index) => (
-          <div key={index} className="project-item">
-            <h4>{project.projectName}</h4>
-            <p>Tech Stack: {project.techStack}</p>
-            <p>Description: {project.description}</p>
-            <button id="delete" onClick={() => deleteProject(index)}>
-              Delete
-            </button>
-          </div>
+      <ul>
+        {projects.map((p, index) => (
+          <li key={index}>
+            <b>{p.projectName}</b> ({p.techStack}) - {p.description}
+            <button id={`delete_project_${index}`} onClick={() => handleDelete(index)}>Delete</button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
+}
 
-const mapStateToProps = (state) => ({
-  projects: state.resume.projects,
-});
-
-export default connect(mapStateToProps, { addProject, deleteProject })(
-  Projects
-);
+export default Projects;
